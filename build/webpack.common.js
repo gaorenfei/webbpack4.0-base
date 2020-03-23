@@ -3,8 +3,9 @@ const path = require('path');
 const config = require('./config');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DotenvFlow = require("dotenv-flow-webpack"); //配置env文件
 
-module.exports = (env, argv) => {
+module.exports = () => {
 	return{
         entry: {
             main: path.join(__dirname, '../src/main.js'),
@@ -32,9 +33,9 @@ module.exports = (env, argv) => {
             ]
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.vue'],
+            extensions: ['.js', '.jsx', '.vue', '.json'],
             alias: { // 引入模块别名
-                src: `${config.srcPath}`,
+                '@': `${config.srcPath}`,
             },
         },
         plugins: [
@@ -45,8 +46,11 @@ module.exports = (env, argv) => {
                 chunksSortMode: 'none',
                 hash: true,
             }),
+            new DotenvFlow(),
             new webpack.DefinePlugin({
-                NODE_ENV: JSON.stringify(env.NODE_ENV) // 定义环境变量
+                "process.env": {
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                }
             })
         ]
     }
