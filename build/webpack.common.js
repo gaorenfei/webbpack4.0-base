@@ -33,7 +33,7 @@ module.exports = () => {
             ]
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.vue', '.json'],
+            extensions: ['.js', '.json'],
             alias: { // 引入模块别名
                 '@': `${config.srcPath}`,
             },
